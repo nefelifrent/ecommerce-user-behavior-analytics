@@ -25,8 +25,9 @@ SELECT
   month,
   mau,
   ROUND(
-    100 * (mau - LAG(mau) OVER (ORDER BY month)) 
-    / LAG(mau) OVER (ORDER BY month),
+    100 * SAFE_DIVIDE(
+    mau - LAG(mau) OVER (ORDER BY month),
+    LAG(mau) OVER (ORDER BY month)),
     2
   ) AS mau_growth_pct
 FROM monthly_active_users
@@ -46,8 +47,9 @@ SELECT
   week_start,
   wau,
   ROUND(
-    100 * (wau - LAG(wau) OVER (ORDER BY week_start))
-    / LAG(wau) OVER (ORDER BY week_start),
+    100 * SAFE_DIVIDE(
+    wau - LAG(wau) OVER (ORDER BY week_start),
+    LAG(wau) OVER (ORDER BY week_start)),
     2
   ) AS wau_growth_pct
 FROM weekly_active_users
@@ -133,7 +135,9 @@ SELECT
   u.month,
   u.mau, 
   b.unique_buyers, 
-  ROUND(100 * b.unique_buyers/u.mau, 2) AS purchase_conversion_rate
+  ROUND(100 * SAFE_DIVIDE(
+    b.unique_buyers,
+    u.mau), 2) AS purchase_conversion_rate
 FROM monthly_users u
 JOIN monthly_buyers b 
   ON u.month = b.month
@@ -154,8 +158,9 @@ SELECT
   month,
   ROUND(revenue, 2) AS revenue,
   ROUND(
-    100*(revenue - LAG(revenue) OVER (ORDER BY month))/
-    LAG(revenue) OVER (ORDER BY month), 2) AS revenue_growth
+    100 * SAFE_DIVIDE(
+    revenue - LAG(revenue) OVER (ORDER BY month),
+    LAG(revenue) OVER (ORDER BY month)), 2) AS revenue_growth
   FROM monthly_revenue
   ORDER BY month;
 
@@ -182,10 +187,15 @@ SELECT
   u.month, 
   u.MAU, 
   ROUND(r.revenue, 2) AS revenue,
-  ROUND(r.revenue/u.MAU, 2) AS ARPU,
+  ROUND(SAFE_DIVIDE(r.revenue,u.mau), 2) AS ARPU,
   ROUND(
-    100 * ((r.revenue/u.MAU) - LAG(r.revenue/u.MAU) OVER (ORDER BY u.month))/
-    LAG(r.revenue/u.MAU) OVER (ORDER BY u.month), 2
+    100 * SAFE_DIVIDE(
+    SAFE_DIVIDE(r.revenue, u.mau)
+      - LAG(SAFE_DIVIDE(r.revenue, u.mau))
+        OVER (ORDER BY u.month),
+
+    LAG(SAFE_DIVIDE(r.revenue, u.mau))
+      OVER (ORDER BY u.month)), 2
   ) AS ARPU_growth_pct
 FROM monthly_users u
 JOIN monthly_revenue r
@@ -255,9 +265,9 @@ SELECT
   views,
   carts,
   purchases,
-  ROUND(100 * carts / views, 2) AS view_to_cart_rate,
-  ROUND(100 * purchases / carts, 2) AS cart_to_purchase_rate,
-  ROUND(100 * purchases / views, 2) AS view_to_purchase_rate
+  ROUND(100 * SAFE_DIVIDE(carts,views), 2) AS view_to_cart_rate,
+  ROUND(100 * SAFE_DIVIDE(purchases, carts), 2) AS cart_to_purchase_rate,
+  ROUND(100 * SAFE_DIVIDE(purchases, views), 2) AS view_to_purchase_rate
 FROM funnel;	
 
 -- 4.2 User Funnel
@@ -274,9 +284,9 @@ SELECT
   view_users,
   cart_users,
   purchase_users,
-  ROUND(100 * cart_users / view_users, 2) AS view_to_cart_rate,
-  ROUND(100 * purchase_users / cart_users, 2) AS cart_to_purchase_rate,
-  ROUND(100 * purchase_users / view_users, 2) AS view_to_purchase_rate
+  ROUND(100 * SAFE_DIVIDE(cart_users, view_users), 2) AS view_to_cart_rate,
+  ROUND(100 * SAFE_DIVIDE(purchase_users, cart_users), 2) AS cart_to_purchase_rate,
+  ROUND(100 * SAFE_DIVIDE(purchase_users, view_users), 2) AS view_to_purchase_rate
 FROM user_funnel;
 
 
@@ -330,8 +340,10 @@ SELECT
     (SELECT COUNT(*) FROM october_users) AS october_users,
     (SELECT COUNT(*) FROM retained) AS retained_users,
     ROUND(
-        100 * (SELECT COUNT(*) FROM retained)
-        / (SELECT COUNT(*) FROM october_users),
+        100 * SAFE_DIVIDE(
+            (SELECT COUNT(*) FROM retained),
+            (SELECT COUNT(*) FROM october_users)
+        ),
         2
     ) AS retention_rate_pct;
 
@@ -382,10 +394,12 @@ SELECT
     (SELECT COUNT(*) FROM october_users) AS october_users,
     (SELECT COUNT(*) FROM churned) AS churned_users,
     ROUND(
-        100 * (SELECT COUNT(*) FROM churned)
-        / (SELECT COUNT(*) FROM october_users),
-        2
-    ) AS churn_rate_pct;
+    100 * SAFE_DIVIDE(
+        (SELECT COUNT(*) FROM churned),
+        (SELECT COUNT(*) FROM october_users)
+    ),
+    2
+) AS churn_rate_pct;
 
 -- ============================================================
 -- 6. COHORT ANALYSIS
@@ -461,14 +475,25 @@ SELECT
   c.cohort_month,
 
   ROUND(
-    100 * MAX(CASE WHEN activity_month = c.cohort_month THEN users END) / cohort_users,
-    2
-  ) AS month_0_pct,
+  100 * SAFE_DIVIDE(
+    MAX(CASE WHEN activity_month = c.cohort_month THEN users END),
+    cohort_users
+  ),
+  2
+) AS month_0_pct,
 
-  ROUND(
-    100 * MAX(CASE WHEN activity_month = DATE_ADD(c.cohort_month, INTERVAL 1 MONTH) THEN users END) / cohort_users,
-    2
-  ) AS month_1_pct
+ROUND(
+  100 * SAFE_DIVIDE(
+    MAX(
+      CASE
+        WHEN activity_month = DATE_ADD(c.cohort_month, INTERVAL 1 MONTH)
+        THEN users
+      END
+    ),
+    cohort_users
+  ),
+  2
+) AS month_1_pct
 
 FROM cohort_data c
 JOIN cohort_size s ON c.cohort_month = s.cohort_month
