@@ -143,9 +143,9 @@ The analysis of October and November 2019 revealed several important business in
 
 Potential enhancements for future versions of this project include:
 
-- Extend the analysis to the complete seven-month dataset.
+- Incorporate additional monthly datasets to extend the time horizon of the analysis.
 - Build multi-month cohort retention analyses.
 - Perform customer segmentation using RFM analysis.
 - Add geographic and seasonal sales analyses.
-- Create customer lifetime value (CLV) metrics.
+- Create Customer Lifetime Value (CLV) metrics.
 - Automate dashboard refresh using scheduled BigQuery queries.
