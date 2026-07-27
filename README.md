@@ -17,7 +17,7 @@ Business Intelligence project built with **Google BigQuery** and **Looker Studio
 
 This project analyzes customer behavior in a large multi-category e-commerce store using Google BigQuery, Standard SQL, and Looker Studio.
 
-The analysis is based on the "eCommerce Behavior Data from Multi Category Store" dataset published on [Kaggle](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store). The original dataset contains approximately 285 million user events collected over seven months (October 2019 – April 2020). For this project, the analysis focuses on October and November 2019, allowing month-over-month comparisons of user engagement, revenue, conversion, and retention.
+The analysis is based on the *eCommerce Behavior Data from Multi Category Store* dataset published on [Kaggle](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store). The dataset consists of two monthly event files covering **October 2019** and **November 2019**, enabling month-over-month comparisons of user engagement, revenue, conversion, and retention.
 
 Each row in the dataset represents a user interaction with the platform, including events such as:
 
