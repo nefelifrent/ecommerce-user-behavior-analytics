@@ -5,7 +5,7 @@
 ![Looker Studio](https://img.shields.io/badge/Looker_Studio-Dashboard-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-Business Intelligence project built with **Google BigQuery** and **Looker Studio** to analyze customer behavior, conversion, revenue, and retention using real-world e-commerce event data.
+End-to-end Business Intelligence project built with Google BigQuery, SQL and Looker Studio to transform raw e-commerce event data into interactive dashboards and actionable business insights.
 
 ## Dashboard Preview
 
@@ -25,7 +25,7 @@ Each row in the dataset represents a user interaction with the platform, includi
 * Add to Cart
 * Purchase
 
-The project demonstrates how event-level data can be transformed into business metrics and interactive dashboards that support data-driven decision making.
+The project demonstrates how event-level data can be transformed into business metrics and interactive dashboards that support data-driven decision making. The project demonstrates an end-to-end analytics workflow, including cloud data ingestion, SQL-based data transformation, KPI definition, dashboard development and business insight generation.
 
 ## Business Objectives
 
@@ -41,11 +41,11 @@ The project aims to answer the following business questions:
 
 ## Tech Stack 
 
-- ☁️ Google Cloud Storage
 - 📊 Google BigQuery
-- 🗄️ SQL (Standard SQL)
+- 🗄 SQL (Standard SQL)
 - 📈 Looker Studio
-- 🐙 GitHub
+- ☁ Google Cloud Storage
+- 🐙 Git & GitHub
 
 ## Project Architecture
 
@@ -64,7 +64,7 @@ BigQuery Raw Tables
 Partitioned Analytics Table
         │
         ▼
-SQL Queries & Views
+SQL Data Transformation & Analytical Views
         │
         ▼
 Looker Studio Dashboard
@@ -80,7 +80,7 @@ Looker Studio Dashboard
 
 4. **Partitioned Analytics Table** – The raw tables were combined into a single partitioned table to improve query performance and reduce the amount of data scanned.
 
-5. **SQL Queries & Views** – Exploratory queries, KPI calculations, funnel analysis, retention analysis, and dashboard views were created using Standard SQL.
+5. **SQL Data Transformation & Analytical Views** – Exploratory queries, KPI calculations, funnel analysis, retention analysis, and dashboard views were created using Standard SQL.
 
 6. **Looker Studio Dashboard** – The final interactive dashboard visualizes the business metrics and insights generated from the SQL queries and views.
 
@@ -108,7 +108,7 @@ ecommerce-user-behavior-analytics/
 
 ## Dashboard Metrics
 
-The interactive dashboard provides an overview of the platform's business performance through the following KPIs and visualizations.
+The interactive dashboard provides an overview of the platform's business performance through the following KPIs and visualizations. All KPIs were calculated directly in SQL and validated using independent verification queries before being integrated into the dashboard.
 
 ### Key Performance Indicators (KPIs)
 
@@ -131,21 +131,33 @@ The interactive dashboard provides an overview of the platform's business perfor
 The analysis of October and November 2019 revealed several important business insights:
 
 - Monthly Active Users increased by **22.3%**, indicating continued platform growth.
-- Revenue increased by **19.7%**, reaching **$275.2 million** in November.
+- Revenue increased by 19.7%, indicating that business growth outpaced historical performance despite only a modest improvement in conversion rate.
 - Purchase Conversion Rate improved from **11.49%** to **11.95%**.
-- Average Revenue per User (ARPU) decreased by **2.14%**, suggesting that revenue growth was primarily driven by user acquisition rather than increased customer spending.
+- Although total revenue increased, Average Revenue per User (ARPU) decreased by 2.14%, suggesting that growth was primarily driven by new customer acquisition rather than higher customer spending.
 - Approximately **46%** of October users returned in November, indicating moderate month-over-month customer retention.
-- The **Smartphones** category generated the highest revenue across all product categories.
-- **Apple** was the highest revenue-generating brand.
-- The largest drop-off in the purchase journey occurred between the **Product View** and **Add to Cart** stages, highlighting an opportunity to improve conversion earlier in the customer journey.
+- **Smartphones** consistently generated the highest revenue, highlighting this category as the primary revenue driver and a potential focus area for future marketing campaigns.
+- **Apple** was the top-performing brand, contributing the largest share of total revenue across both months..
+- The largest user drop-off occurred between the Product View and Add to Cart stages, suggesting that improvements to product pages, pricing strategy or call-to-action elements could significantly improve conversion.
+
+## Skills Demonstrated
+
+This project demonstrates practical experience with:
+
+- Writing complex analytical SQL queries
+- Designing business KPIs
+- Data validation and quality assurance
+- Dashboard development
+- Business intelligence reporting
+- Data visualization best practices
+- Cloud-based analytics with Google BigQuery
 
 ## Future Improvements
 
-Potential enhancements for future versions of this project include:
+Future roadmap includes:
 
-- Incorporate additional monthly datasets to extend the time horizon of the analysis.
-- Build multi-month cohort retention analyses.
-- Perform customer segmentation using RFM analysis.
-- Add geographic and seasonal sales analyses.
-- Create Customer Lifetime Value (CLV) metrics.
-- Automate dashboard refresh using scheduled BigQuery queries.
+- Customer segmentation using RFM analysis
+- Customer Lifetime Value (CLV)
+- Forecasting future sales trends
+- Interactive executive dashboards
+- Automated ETL pipeline
+- Scheduled dashboard refresh
