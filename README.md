@@ -5,7 +5,7 @@
 ![Looker Studio](https://img.shields.io/badge/Looker_Studio-Dashboard-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-End-to-end Business Intelligence project built with Google BigQuery, SQL and Looker Studio to transform raw e-commerce event data into interactive dashboards and actionable business insights.
+End-to-end Business Intelligence project built with Google BigQuery, SQL and Looker Studio to analyze e-commerce user behavior, conversion, revenue, customer retention and other key business metrics using real-world event data.
 
 ## Dashboard Preview
 
@@ -27,9 +27,9 @@ Each row in the dataset represents a user interaction with the platform, includi
 
 The project demonstrates how event-level data can be transformed into business metrics and interactive dashboards that support data-driven decision making. The project demonstrates an end-to-end analytics workflow, including cloud data ingestion, SQL-based data transformation, KPI definition, dashboard development and business insight generation.
 
-## Business Objectives
+## Business Questions
 
-The project aims to answer the following business questions:
+The project aims to answer the following business questions commonly encountered by Product and Business Intelligence teams:
 - How many users actively use the platform each month?
 - How has revenue changed from October to November?
 - What percentage of active users complete a purchase?
